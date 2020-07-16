@@ -17,7 +17,6 @@ namespace BeerApp.Controllers
         static HttpClient client = new HttpClient();
       
 
-        [WebApiConfig.AccessActionFilter]
         // GET api/<controller>/5
         public async System.Threading.Tasks.Task<string> GetAsync(int id)
         {
@@ -64,25 +63,30 @@ namespace BeerApp.Controllers
         }
 
         // POST api/<controller>
+        /// <summary>
+        /// action is using filter to provide validation
+        /// </summary>
+        /// <param name="id">The beer Id in Punk to search for</param>
+        /// <param name="rating">object representing user rating, email and comment about the beer</param>
+        /// <returns>status message showing if the request was successful or failed</returns>
+        /// 
+        [Filters.VintriFilter]
         public async System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PostAsync([FromUri]int id, [FromBody]BeerRatingViewModel rating)
         {
-            if (ModelState.IsValidField("Rating"))
+            string path = "https://api.punkapi.com/v2/beers/" + id;
+            HttpResponseMessage response = await client.GetAsync(path);
+            //   Beerd BeerRes = null;
+            if (response.IsSuccessStatusCode)
             {
-                string path = "https://api.punkapi.com/v2/beers/" + id;
-                HttpResponseMessage response = await client.GetAsync(path);
-                //   Beerd BeerRes = null;
-                if (response.IsSuccessStatusCode)
+                var Samochod = response.Content.ReadAsStringAsync();
+                List<BeerRatingViewModel> json = JsonConvert.DeserializeObject<List<BeerRatingViewModel>>(Samochod.Result);
+
+                //make sure their is a result in our collection
+                if (json.First() != null)
                 {
-                    var Samochod = response.Content.ReadAsStringAsync();
-                    List<BeerRatingViewModel> json = JsonConvert.DeserializeObject<List<BeerRatingViewModel>>(Samochod.Result);
-
                     var val = json.First();
-                    val.BeerId = id;
-                    val.Comments = rating.Comments;
-                    val.Rating = rating.Rating;
-                    val.Username = rating.Username;
-
-
+                    //pass values frombody into values collected from punk api 
+                    val.BeerId = id; val.Comments = rating.Comments; val.Rating = rating.Rating; val.Username = rating.Username;
                     try
                     {
                         List<BeerRatingViewModel> punkBeers = new List<BeerRatingViewModel>();
@@ -101,19 +105,15 @@ namespace BeerApp.Controllers
                     }
                     catch (Exception ex)
                     {
-
-                        throw;
+                        return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Could not locate a Beer with that Id");
                     }
-                }
-                else
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Could not locate a Beer with that Id");
                 }
             }
             else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Could not locate a Beer with that Id");
             }
+
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }

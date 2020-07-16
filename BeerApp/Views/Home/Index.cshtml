@@ -43,28 +43,50 @@
 
             $("#123").click(function () {
 
-                var beer = { Username: "brendan", Rating: "5", Comments: "example of a comment" };
+                var beer = { Username: "brendan@live.ca", Rating: "4", Comments: "example of a comment" };
 
                 var beer1 = { Username: "brendan", Rating: "50", Comments: "example of a comment" };
 
-                $(function () {
-                    $.ajax({
-                        type: "POST",
-                        data: JSON.stringify(beer),
-                        url: "api/beerrating/1",
-                        contentType: "application/json"
-                    });
-                });
+                var beer2 = { Username: "brendanbotond@hotmail.com", Rating: "5", Comments: "example of a comment" };
+
+                var beer3 = { Username: "brendanbotond@hotmail.com", Rating: "4", Comments: "example of a comment" };
+
+                //$(function () {
+                //    $.ajax({
+                //        type: "POST",
+                //        data: JSON.stringify(beer),
+                //        url: "api/beerrating/1",
+                //        contentType: "application/json"
+                //    });
+                //});
+
+                //$(function () {
+                //    $.ajax({
+                //        type: "POST",
+                //        data: JSON.stringify(beer1),
+                //        url: "api/beerrating/1",
+                //        contentType: "application/json"
+                //    });
+                //});
+
+
+                //$(function () {
+                //    $.ajax({
+                //        type: "POST",
+                //        data: JSON.stringify(beer2),
+                //        url: "api/beerrating/1",
+                //        contentType: "application/json"
+                //    });
+                //});
 
                 $(function () {
                     $.ajax({
                         type: "POST",
-                        data: JSON.stringify(beer1),
-                        url: "api/beerrating/1",
+                        data: JSON.stringify(beer3),
+                        url: "api/beerrating/2",
                         contentType: "application/json"
                     });
                 });
-
 
 
                 //$(function () {

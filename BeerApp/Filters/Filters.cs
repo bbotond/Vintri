@@ -9,11 +9,16 @@ using System.Web.Http.Filters;
 
 namespace BeerApp.Filters
 {
-    public class VintriFilter
+    public class VintriFilter : ActionFilterAttribute
     {
-
-
-
+        public override void OnActionExecuting(HttpActionContext actionContext)
+        {
+            if (actionContext.ModelState.IsValid == false)
+            {
+                actionContext.Response = actionContext.Request.CreateErrorResponse(
+                    HttpStatusCode.BadRequest, actionContext.ModelState);
+            }
+        }
     }
 
 

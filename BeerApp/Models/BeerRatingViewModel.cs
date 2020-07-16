@@ -15,9 +15,10 @@ namespace BeerApp.Models
     {
         public int BeerId { get; set; }
 
+        [RegularExpression(@"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$", ErrorMessage = "Please provide a valid email address")]
         public string Username { get; set; }
 
-        [Range(1,5)]
+        [Range(1,5, ErrorMessage ="Please provide a value between 1 and 5")]
         public int Rating { get; set; }
 
         public string Comments { get; set; }
