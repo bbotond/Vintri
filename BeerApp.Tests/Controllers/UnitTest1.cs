@@ -14,7 +14,7 @@ namespace BeerApp.Tests.Controllers
         {
             // Arrange
             BeerRatingController controller = new BeerRatingController();
-            await controller.PostAsync(1, new Models.BeerRatingViewModel() { Comments = "123", Rating = 4, Username = "bren@hotmail.com" });
+//            await controller.PostAsync(1, new Models.BeerRatingViewModel() { Comments = "123", Rating = 4, Username = "bren@hotmail.com" });
 
             //            BeerRatingController controller = new BeerRatingController(new Models.HttpClientHandler());
 
