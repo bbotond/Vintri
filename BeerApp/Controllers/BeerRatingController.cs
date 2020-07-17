@@ -115,13 +115,11 @@ namespace BeerApp.Controllers
 
 
 
-
-      
         // GET api/<controller>/5
         /// <summary>
-        /// 
+        /// REST API endpoint to retrieve a list of beers.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">the name of the beer to collect from the punk api</param>
         /// <returns></returns>
         public IEnumerable<dynamic> Get(string id)
         {
