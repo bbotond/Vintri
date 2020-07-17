@@ -10,13 +10,16 @@ namespace BeerApp.Tests.Controllers
 
 
         [TestMethod]
-        public void Post()
+        public async System.Threading.Tasks.Task PostAsync()
         {
             // Arrange
-//            BeerRatingController controller = new BeerRatingController(new Models.HttpClientHandler());
+            BeerRatingController controller = new BeerRatingController();
+            await controller.PostAsync(1, new Models.BeerRatingViewModel() { Comments = "123", Rating = 4, Username = "bren@hotmail.com" });
+
+            //            BeerRatingController controller = new BeerRatingController(new Models.HttpClientHandler());
 
             // Act
-  //          controller.PostAsync(1, new Models.BeerRatingViewModel() { Comments = "example comment", Rating = 6, Username = "brendan"} );
+            //          controller.PostAsync(1, new Models.BeerRatingViewModel() { Comments = "example comment", Rating = 6, Username = "brendan"} );
 
             // Assert
 

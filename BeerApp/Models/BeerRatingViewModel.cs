@@ -24,24 +24,6 @@ namespace BeerApp.Models
         public string Comments { get; set; }
 
 
-    }
-       
-
-
-    public class Task2
-    {
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
-
-        public List<BeerRatingViewModel> Ratings { get; set; }
-             
-
-        public Task2()
-        {
-            Ratings = new List<BeerRatingViewModel>();
-        }
-    }
+    }      
 
 }

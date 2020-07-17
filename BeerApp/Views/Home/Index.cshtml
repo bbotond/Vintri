@@ -1,36 +1,26 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+﻿<div class="row">
+    <form>
+        <div class="form-group">
+            <label for="idNum">Id</label>
+            <input type="text" class="form-control" id="idNum" placeholder="id">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="comment">comment</label>
+            <input type="text" class="form-control" id="comment" placeholder="comment">
+        </div>
+        <div class="form-group">
+            <label for="Rating">Rating</label>
+            <input type="number" class="form-control" id="Rating" placeholder="Rating">
+        </div>
+
+        <button id="123" type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-            a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-            is an ideal platform for building RESTful applications on the .NET Framework.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
-    </div>
-</div>
-
-
-
-
-
-
-<button id="123" type="submit"></button>
 
 @section scripts{
     <script>
@@ -41,78 +31,116 @@
 
 
 
-            $("#123").click(function () {
+            $("#123").click(function (e) {
+                e.preventDefault();
+                var model = new Object();
 
-                var beer = { Username: "brendan@live.ca", Rating: "4", Comments: "example of a comment" };
+                model.Username = $("#exampleInputEmail1").val();;
+                model.Rating = $("#Rating").val();
+                model.Comments = $("#comment").val();
 
-                var beer1 = { Username: "brendan", Rating: "50", Comments: "example of a comment" };
+                var puckiD = $("#idNum").val();
 
-                var beer2 = { Username: "brendanbotond@hotmail.com", Rating: "5", Comments: "example of a comment" };
+                alert(model.Rating);
+                alert(model.Username);
+                alert(model.Comments);
 
-                var beer3 = { Username: "brendanbotond@hotmail.com", Rating: "4", Comments: "example of a comment" };
-
-                //$(function () {
-                //    $.ajax({
-                //        type: "POST",
-                //        data: JSON.stringify(beer),
-                //        url: "api/beerrating/1",
-                //        contentType: "application/json"
-                //    });
-                //});
-
-                //$(function () {
-                //    $.ajax({
-                //        type: "POST",
-                //        data: JSON.stringify(beer1),
-                //        url: "api/beerrating/1",
-                //        contentType: "application/json"
-                //    });
-                //});
-
-
-                //$(function () {
-                //    $.ajax({
-                //        type: "POST",
-                //        data: JSON.stringify(beer2),
-                //        url: "api/beerrating/1",
-                //        contentType: "application/json"
-                //    });
-                //});
-
+                var Url = ("api/beerrating/" + puckiD);
+                
                 $(function () {
                     $.ajax({
                         type: "POST",
-                        data: JSON.stringify(beer3),
-                        url: "api/beerrating/2",
-                        contentType: "application/json"
+                        data: JSON.stringify(model),
+                        url: Url,
+                        contentType: "application/json",
+                        complete: function myfunction() {
+                            alert("Completed");
+                        },
+                        success: function (result) {
+                            alert(result.statusText);
+                        },
+                        error: function (result) {
+                            alert(result.statusText);
+                        },
+                        failure: function (result) {
+                            alert(result.statusText);
+                        }
                     });
                 });
-
-
-                //$(function () {
-                //    $.ajax({
-                //        type: "POST",
-                //        url: "api/beerrating",
-                //        data: { id: "1", rating: beer },
-                //        dataType: 'json',
-                //        beforeSend: function myfunction() {
-                //            alert("about to send");
-                //        },
-                //        complete: function myfunction() {
-                //            alert("complete");
-                            
-                //        },
-                //        success: function (result) {
-                //            alert("success");
-                //        },
-                //        failure: function (result) {
-                //            alert("Error fetching stations");
-                //        }
-                //    });
-                //});
-
-
             });
+
+            //$("#123").click(function () {
+
+            //    var beer = { Username: "brendan@live.ca", Rating: "4", Comments: "example of a comment" };
+
+            //    var beer1 = { Username: "brendan", Rating: "50", Comments: "example of a comment" };
+
+            //    var beer2 = { Username: "brendanbotond@hotmail.com", Rating: "5", Comments: "example of a comment" };
+
+            //    var beer3 = { Username: "brendanbotond@hotmail.com", Rating: "4", Comments: "example of a comment" };
+
+            //    //$(function () {
+            //    //    $.ajax({
+            //    //        type: "POST",
+            //    //        data: JSON.stringify(beer),
+            //    //        url: "api/beerrating/1",
+            //    //        contentType: "application/json"
+            //    //    });
+            //    //});
+
+            //    //$(function () {
+            //    //    $.ajax({
+            //    //        type: "POST",
+            //    //        data: JSON.stringify(beer1),
+            //    //        url: "api/beerrating/1",
+            //    //        contentType: "application/json"
+            //    //    });
+            //    //});
+
+
+            //    //$(function () {
+            //    //    $.ajax({
+            //    //        type: "POST",
+            //    //        data: JSON.stringify(beer2),
+            //    //        url: "api/beerrating/1",
+            //    //        contentType: "application/json"
+            //    //    });
+            //    //});
+
+            //    $(function () {
+            //        $.ajax({
+            //            type: "POST",
+            //            data: JSON.stringify(beer3),
+            //            url: "api/beerrating/2",
+            //            contentType: "application/json"
+            //        });
+            //    });
+
+
+            //    //$(function () {
+            //    //    $.ajax({
+            //    //        type: "POST",
+            //    //        url: "api/beerrating",
+            //    //        data: { id: "1", rating: beer },
+            //    //        dataType: 'json',
+            //    //        beforeSend: function myfunction() {
+            //    //            alert("about to send");
+            //    //        },
+            //    //        complete: function myfunction() {
+            //    //            alert("complete");
+
+            //    //        },
+            //    //        success: function (result) {
+            //    //            alert("success");
+            //    //        },
+            //    //        failure: function (result) {
+            //    //            alert("Error fetching stations");
+            //    //        }
+            //    //    });
+            //    //});
+
+
+            //});
 
 
         });
