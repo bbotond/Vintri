@@ -27,6 +27,7 @@ namespace BeerApp.Controllers
         [Filters.VintriFilter]
         public async System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> PostAsync([FromUri]int id, [FromBody]BeerRatingViewModel rating)
         {
+            //send request to punk api for data based off of the beer ID
             string path = "https://api.punkapi.com/v2/beers/" + id;
             HttpResponseMessage response = await client.GetAsync(path);
             //   Beerd BeerRes = null;
@@ -62,6 +63,7 @@ namespace BeerApp.Controllers
                     }
                     catch (Exception ex)
                     {
+                        System.Diagnostics.Debug.WriteLine(ex.Message);
                         return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Could not locate a Beer with that Id");
                     }
                 }
@@ -81,12 +83,13 @@ namespace BeerApp.Controllers
 
         // GET api/<controller>/5
         /// <summary>
-        /// 
+        /// REST API endpoint to retrieve a list of beers.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">the name of the beer to collect from the punk api</param>
+        /// <returns>josn result of the selected beer and all of its ratings in database.json</returns>
         public async System.Threading.Tasks.Task<IEnumerable<dynamic>> GetAsync(string id)
         {
+            //send request to punk api for data based off of the beer name
             string path = "https://api.punkapi.com/v2/beers/?beer_name=" + id;
             HttpResponseMessage response = await client.GetAsync(path);
 
@@ -120,9 +123,10 @@ namespace BeerApp.Controllers
         /// REST API endpoint to retrieve a list of beers.
         /// </summary>
         /// <param name="id">the name of the beer to collect from the punk api</param>
-        /// <returns></returns>
+        /// <returns>josn result of the selected beer and all of its ratings in database.json</returns>
         public IEnumerable<dynamic> Get(string id)
         {
+            //send request to punk api for data based off of the beer name
             string path = "https://api.punkapi.com/v2/beers/?beer_name=" + id;
             HttpResponseMessage response = client.GetAsync(path).Result;
 
